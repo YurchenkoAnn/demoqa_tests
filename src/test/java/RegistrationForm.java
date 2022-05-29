@@ -4,10 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationForm {
+
+    @BeforeAll
+    static void beforeAll() {
+        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1920x1080";
+    }
+
     @Test
     void successfulTest() {
         String firstname = "Иван";
@@ -16,7 +22,10 @@ public class RegistrationForm {
         String email = "ivanov@egorov.com";
         String address = "Иванова 1б";
 
-        open("https://demoqa.com/automation-practice-form/");
+        open("/automation-practice-form/");
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
+
 
         $("[id=firstName]").setValue(firstname);
         $("[id=lastName]").setValue(lastName);
@@ -24,7 +33,7 @@ public class RegistrationForm {
         $("[id=userNumber]").setValue(number);
         $("[id=currentAddress]").setValue(address);
 
-        //$("[id=submit]").click();
+        $("[id=submit]").click();
 
 
     }
