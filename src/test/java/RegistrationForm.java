@@ -32,8 +32,20 @@ public class RegistrationForm {
         $("[id=userEmail]").setValue(email);
         $("[id=userNumber]").setValue(number);
         $("[id=currentAddress]").setValue(address);
+        $( byText ("Male")).click();
 
-        $("[id=submit]").click();
+        $("#subjectsInput").sendKeys("ry");
+        $(byText("Chemistry")).click();
+
+        $("#subjectsInput").sendKeys("ry");
+        $(byText("History")).click();
+
+        $("[id=dateOfBirthInput]").click();
+        $("[aria-label=Choose Tuesday, May 24th, 2022]").click();   //*[@id="dateOfBirth"]/div[2]/div[2]/div/div/div[2]/div[2]/div[4]/div[3]
+
+
+
+        $("#submit]").click();
 
 
     }
