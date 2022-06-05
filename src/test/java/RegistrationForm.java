@@ -2,6 +2,8 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -16,9 +18,9 @@ public class RegistrationForm {
 
     @Test
     void successfulTest() {
-        String firstname = "Иван";
+        String firstName = "Иван";
         String lastName = "Иванов";
-        String number = "2-342-223";
+        String number = "8924238782";
         String email = "ivanov@egorov.com";
         String address = "Иванова 1б";
 
@@ -27,26 +29,50 @@ public class RegistrationForm {
         executeJavaScript("$('#fixedban').remove()");
 
 
-        $("[id=firstName]").setValue(firstname);
+        //Name, Email, Gender, Mobile
+        $("[id=firstName]").setValue(firstName);
         $("[id=lastName]").setValue(lastName);
         $("[id=userEmail]").setValue(email);
-        $("[id=userNumber]").setValue(number);
-        $("[id=currentAddress]").setValue(address);
         $( byText ("Male")).click();
+        $("[id=userNumber]").setValue(number);
 
+        //Date of Birth
+        $("[id=dateOfBirthInput]").click();
+        $(".react-datepicker__month-select").click();
+        $(".react-datepicker__month-select").selectOption("August");
+        $(".react-datepicker__year-select").click();
+        $(".react-datepicker__year-select").selectOption("2006");
+
+        //Subjects
         $("#subjectsInput").sendKeys("ry");
         $(byText("Chemistry")).click();
-
         $("#subjectsInput").sendKeys("ry");
         $(byText("History")).click();
 
-        $("[id=dateOfBirthInput]").click();
-        $("[aria-label=Choose Tuesday, May 24th, 2022]").click();   //*[@id="dateOfBirth"]/div[2]/div[2]/div/div/div[2]/div[2]/div[4]/div[3]
+        //Hobbies
+        $( byText ("Sports")).click();
 
+        //Current Address
+        $("[id=currentAddress]").setValue(address);
 
+        //State and City
+        $("#state").click();
+        $("#react-select-3-option-2").click();
+        $("#city").click();
+        $("#react-select-4-option-1").click();
 
-        $("#submit]").click();
+        //Picture
+        $("[id=uploadPicture]").uploadFile(new
+                File("src\\test\\resources\\a.jpg"));
 
+        $("#submit").click();
+
+        //Checks
+        $(".table-responsive").shouldHave(
+                text( firstName + " " + lastName),
+                text(email),
+                text("Male"),
+                text(number));
 
     }
 }
