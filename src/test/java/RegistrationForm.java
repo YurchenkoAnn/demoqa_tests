@@ -9,7 +9,6 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationForm {
-
     @BeforeAll
     static void beforeAll() {
         Configuration.baseUrl = "https://demoqa.com";
@@ -23,25 +22,24 @@ public class RegistrationForm {
         String number = "8924238782";
         String email = "ivanov@egorov.com";
         String address = "Иванова 1б";
-
         open("/automation-practice-form/");
         executeJavaScript("$('footer').remove()");
         executeJavaScript("$('#fixedban').remove()");
 
-
         //Name, Email, Gender, Mobile
-        $("[id=firstName]").setValue(firstName);
-        $("[id=lastName]").setValue(lastName);
-        $("[id=userEmail]").setValue(email);
-        $( byText ("Male")).click();
-        $("[id=userNumber]").setValue(number);
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(email);
+        $(byText("Male")).click();
+        $("#userNumber").setValue(number);
 
         //Date of Birth
-        $("[id=dateOfBirthInput]").click();
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").click();
         $(".react-datepicker__month-select").selectOption("August");
         $(".react-datepicker__year-select").click();
         $(".react-datepicker__year-select").selectOption("2006");
+        $(byText("15")).click();
 
         //Subjects
         $("#subjectsInput").sendKeys("ry");
@@ -50,10 +48,10 @@ public class RegistrationForm {
         $(byText("History")).click();
 
         //Hobbies
-        $( byText ("Sports")).click();
+        $(byText("Sports")).click();
 
         //Current Address
-        $("[id=currentAddress]").setValue(address);
+        $("#currentAddress").setValue(address);
 
         //State and City
         $("#state").click();
@@ -62,17 +60,20 @@ public class RegistrationForm {
         $("#react-select-4-option-1").click();
 
         //Picture
-        $("[id=uploadPicture]").uploadFile(new
-                File("src\\test\\resources\\a.jpg"));
-
+        $("#uploadPicture").uploadFile(new File("src\\test\\resources\\a.jpg"));
+        //$("#uploadPicture").uploadFromClasspath("a.jpeg");
         $("#submit").click();
-
+        
         //Checks
         $(".table-responsive").shouldHave(
-                text( firstName + " " + lastName),
+                text(firstName + " " + lastName),
                 text(email),
                 text("Male"),
-                text(number));
-
+                text(number),
+                text("15 August,2006"),
+                text("Chemistry, History"),
+                text("a.jpg"),
+                text(address),
+                text("Haryana Panipat"));
     }
 }
