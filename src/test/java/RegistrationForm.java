@@ -63,7 +63,7 @@ public class RegistrationForm {
         $("#uploadPicture").uploadFile(new File("src\\test\\resources\\a.jpg"));
         //$("#uploadPicture").uploadFromClasspath("a.jpeg");
         $("#submit").click();
-        
+
         //Checks
         $(".table-responsive").shouldHave(
                 text(firstName + " " + lastName),
@@ -72,6 +72,7 @@ public class RegistrationForm {
                 text(number),
                 text("15 August,2006"),
                 text("Chemistry, History"),
+                text("Sports"),
                 text("a.jpg"),
                 text(address),
                 text("Haryana Panipat"));
